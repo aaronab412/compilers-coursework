@@ -1,11 +1,11 @@
 grammar SimpleLang;
 
-prog : dec+ EOF;
+prog : dec+ EOF;//done
 
 dec
     : typed_idfr  LParen vardec? RParen body // change vardec and args
 ;
-vardec:  typed_idfr  (Comma typed_idfr)*
+vardec:  typed_idfr  (Comma typed_idfr)*//
 
 ;
 typed_idfr
@@ -29,7 +29,7 @@ block
 typed_assign : typed_idfr Assign exp;
 
 exp
-    : Idfr Assign exp                                 #AssignExpr
+    : Idfr Assign exp                                       #AssignExpr
     | LParen exp binop exp RParen                           #BinOpExpr
     | Idfr LParen args RParen                              #InvokeExpr
     | block                                                 #BlockExpr
@@ -45,9 +45,9 @@ exp
     |BoolLit                                                #BoolLit
 
 ;
-args:exp (Comma exp)*;//was prevooiusly args:(exp (Comma exp)*)?
-binop
-    : Eq              #EqBinop
+args:(exp (Comma exp)*)? //  used in invoke expression
+;binop:
+    Eq              #EqBinop
     | Less            #LessBinop
     | LessEq          #LessEqBinop
     | Great           #GreatBinop
